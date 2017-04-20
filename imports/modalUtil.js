@@ -7,11 +7,11 @@ export const modal = {
   //init modal with options if provided
   //abstracts between materialize:materialize and poetic:materialize-scss
   open(elId, options) {
-    console.log('modalUtil.modal.open', [elId, options]);
+    // console.log('modalUtil.modal.open', [elId, options]);
 
     //get the modal query
     const jqModal = $("#"+elId);
-    console.log('modalUtil.modal.open.modal', jqModal);
+    // console.log('modalUtil.modal.open.modal', jqModal);
 
     //if materialize
     if(Package['materialize:materialize']) {
@@ -30,11 +30,11 @@ export const modal = {
 
     //if materialize-scss
     if(Package['poetic:materialize-scss']) {
-      console.log('modalUtil.modal.open.materialize-scss');
+      // console.log('modalUtil.modal.open.materialize-scss');
 
       //init modal using modal()
       if(options) {
-        console.log('modalUtil.modal.open.materialize-scss');
+        // console.log('modalUtil.modal.open.materialize-scss');
         jqModal.openModal(options);
       }
       else {
@@ -48,7 +48,7 @@ export const modal = {
 
     //get the modal query
     const jqModal = $(elId);
-    console.log('modalUtil.modal.open.modal', jqModal);
+    // console.log('modalUtil.modal.open.modal', jqModal);
 
     //if materialize
     if(Package['materialize:materialize']) {

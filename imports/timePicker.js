@@ -12,10 +12,9 @@ Template.timePicker.onCreated(() => {
 
   //instance data value?
   const instance = Template.instance();
-  console.log('timepicker instance data value', instance);
 
   instance.id = (instance.data && instance.data.id)?instance.data.id:'pickatime_modal_'+uuid.new();
-  console.log('modal id', instance.id);
+  // console.log('modal id', instance.id);
 
   //if value is provided
   let value = (instance.data && instance.data.value)?instance.data.value:undefined;
@@ -44,7 +43,7 @@ Template.timePicker.events({
     const instance = Template.instance();
 
     //render the modal in the first materialize container
-    console.log('rendering pickatime modal in autoform pickatime input type', instance);
+    // console.log('rendering pickatime modal in autoform pickatime input type', instance);
     const container = $('.container').get(0);
     Blaze.renderWithData(
       Template.materializeTimePickerModal,
@@ -54,7 +53,7 @@ Template.timePicker.events({
       },
       container
     );
-    console.log('rendered pickatime modal', $('#'+instance.id).get(0));
+    // console.log('rendered pickatime modal', $('#'+instance.id).get(0));
   }
 });
 
