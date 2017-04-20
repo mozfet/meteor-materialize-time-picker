@@ -2,34 +2,41 @@
 
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { modal } from './modalUtil.js';
 
 import './modal.html';
 import './picker.js';
 
+//when template instance is rendered
 Template.materializeTimePickerModal.onRendered(() => {
   const instance = Template.instance();
-  const modalId = '#'+instance.data.id;
 
-  //init the modal
-  $(modalId).modal({
+  //re-render the timepicker when there is a change in rendering of the modal
+  const modalId = instance.data.id;
 
-    //when modal is opened
-    ready: (modal, trigger) => {
-
-      //render the picker in modal content
-      const modalContentNode = $(modalId).find('.modal-content').get(0);
-      Blaze.renderWithData(Template.materializeTimePicker, {value: instance.data.value}, modalContentNode);
-    },
-
-    //when modal is closed
-    complete: () => {
-
-      //remove all content from the modal
-      $(modalId).find('.modal-content').empty();
-    }
-  });
+  //open modal
+  modal.open(modalId);
 });
 
+//template helpers
+Template.materializeTimePickerModal.helpers({
+  closeButtonLabel() {
+    const instance = Template.instance();
+    return instance.data && instance.data.modalOptions && instance.data.modalOptions.closeButtonLabel?
+      instance.data.modalOptions.closeButtonLabel:'Close';
+  },
+  clearButtonLabel() {
+    const instance = Template.instance();
+    return instance.data && instance.data.modalOptions && instance.data.modalOptions.clearButtonLabel?
+      instance.data.modalOptions.closeButtonLabel:'Clear';
+  },
+  value() {
+    const instance = Template.instance();
+    return instance.data.value;
+  }
+});
+
+//template events
 Template.materializeTimePickerModal.events({
   'click .js-materialize-time-picker-modal-clear': function(event, template){
     const instance = Template.instance();

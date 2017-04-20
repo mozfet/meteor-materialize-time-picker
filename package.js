@@ -16,6 +16,7 @@ Package.onUse(function (api) {
   api.use(['templating', 'underscore', 'reactive-var', 'blaze'], 'client');
   api.use('ecmascript@0.7.2');
   api.use('fourseven:scss@3.4.3');
+  api.use('rwatts:uuid@0.1.0');
   api.addFiles([
     'index.js',
     'sass/timepicker.scss'

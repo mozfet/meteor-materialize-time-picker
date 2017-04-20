@@ -22,7 +22,7 @@ Template.materializeTimePicker.onCreated(() => {
   const instance = Template.instance();
 
   //get current time
-  let inValue = instance.data && instance.data.value?instance.data.value.get():undefined;
+  let inValue = (instance.data && instance.data.value)?instance.data.value.get():undefined;
   const now = moment();
   if(inValue) {
     inValue = now.format('YYYY/MM/DD ')+inValue;
@@ -37,7 +37,20 @@ Template.materializeTimePicker.onCreated(() => {
   instance.hour = new ReactiveVar(currentHour);
   instance.minute = new ReactiveVar(currentMinute);
   instance.meridiem = new ReactiveVar(currentMeridiem);
-  instance.value = new ReactiveVar(currentTimeValue);
+
+  //if data value is present
+  if(instance.data && instance.data.value) {
+
+    //assign value
+    instance.value = instance.data.value;
+  }
+
+  //else - no value data present
+  else {
+
+    //create new value
+    instance.value = new ReactiveVar(currentTimeValue);
+  }
 
   //reactively calculate the time
   instance.autorun(() => {
