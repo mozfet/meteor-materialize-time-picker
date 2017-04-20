@@ -3,7 +3,7 @@
 Package.describe({
   name: 'mozfet:materialize-time-picker',
   summary: 'The missing materialize time picker',
-  version: '0.1.0',
+  version: '0.1.1',
   git: 'https://github.com/mozfet/meteor-materialize-time-picker.git'
 });
 
