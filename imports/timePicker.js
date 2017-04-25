@@ -42,16 +42,34 @@ Template.timePicker.events({
   'click .js-timepicker-trigger' (event, template) {
     const instance = Template.instance();
 
+    //get the anchor
+    let qAnchor = $('.js-timepicker-anchor');
+    let anchor = qAnchor.get(0);
+
+    if(!anchor) {
+      console.warn('timepicker requires a tag with class js-timepicker-anchor for rendering timepicker modal');
+      console.warn('using ancestral container as anchor for rendering timepicker modal');
+      qAnchor = $('#'.instance.id).parents('.container');
+      anchor = qAnchor.get(0);
+    }
+
+    //if modal is allready rendered
+    const modal = qAnchor.find('#'+instance.id).get(0);
+    if(modal) {
+
+      //remove modal so that it can be rerendered
+      modal.remove();
+    }
+
     //render the modal in the first materialize container
     // console.log('rendering pickatime modal in autoform pickatime input type', instance);
-    const container = $('.container').get(0);
     Blaze.renderWithData(
       Template.materializeTimePickerModal,
       {
         id: instance.id,
         value: instance.value //note that value could be undefined if not provided as data
       },
-      container
+      anchor
     );
     // console.log('rendered pickatime modal', $('#'+instance.id).get(0));
   }
@@ -60,4 +78,5 @@ Template.timePicker.events({
 //on destroyed
 Template.timePicker.onDestroyed(() => {
   const instance = Template.instance();
+  // console.log('destroy time picker');
 });

@@ -8,26 +8,61 @@ import './unit.js';
 import './meridiem.js';
 import './picker.html';
 
-//format helpers
+//constant time format
 const TIME_FORMAT = 'h:mm A';
-const timeString = (hour, minute, meridiem) => {
-  return hour+':'+padLeft(minute.toString(),2,'0')+' '+meridiem;
-};
+
+//constant left pad function
 const padLeft = (nr, n, str) => {
   return Array(n-String(nr).length+1).join(str||'0')+nr;
+};
+
+//export utility function to convert numeric time to string
+export const timeString = (hour, minute, meridiem) => {
+  return hour+':'+padLeft(minute.toString(),2,'0')+' '+meridiem;
+};
+
+//export utility function to convert moment to string
+export const momentToTimeString = (momento) => {
+  // console.log('to string', momento);
+  const currentHour = Number(momento.format('h'));
+  const currentMinute = Number(momento.format('mm'));
+  const currentMeridiem = momento.format('A');
+  const currentTimeValue = timeString(currentHour, currentMinute, currentMeridiem);
+  return currentTimeValue;
+};
+
+
+//export utility function to convert moment to time
+export const momentToTimeObject = (momento) => {
+  const hour = Number(momento.format('h'));
+  const minute = Number(momento.format('mm'));
+  const meridiem = momento.format('A');
+  return {
+    hour: hour,
+    minute: minute,
+    meridiem: meridiem
+  };
+};
+
+//export utility function to get current time as string
+export const currentTime = () => {
+  const now = moment();
+  // console.log('now', now);
+  return momentToTimeString(now);
 };
 
 //when template is created
 Template.materializeTimePicker.onCreated(() => {
   const instance = Template.instance();
 
-  //get current time
+  //get time from data or use current time
   let inValue = (instance.data && instance.data.value)?instance.data.value.get():undefined;
   const now = moment();
   if(inValue) {
     inValue = now.format('YYYY/MM/DD ')+inValue;
   }
   const value = inValue?moment(inValue, 'YYYY/MM/DD '+TIME_FORMAT):now;
+
   const currentHour = Number(value.format('h'));
   const currentMinute = Number(value.format('mm'));
   const currentMeridiem = value.format('A');

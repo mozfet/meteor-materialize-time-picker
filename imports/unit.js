@@ -88,13 +88,15 @@ Template.materializeTimePickerUnit.helpers({
 
 Template.materializeTimePickerUnit.events({
   'click .materialize-time-picker-unit-increase'(event, instance) {
+    event.preventDefault();
     const value =
       _inc(instance.data.dlt, instance.data.max, instance.data.value.get());
     instance.data.value.set(value);
   },
   'click .materialize-time-picker-unit-decrease'(event, instance) {
-     const value =
-       _dec(instance.data.dlt, instance.data.min, instance.data.value.get());
-     instance.data.value.set(value);
+    event.preventDefault();
+    const value = _dec(instance.data.dlt, instance.data.min,
+      instance.data.value.get());
+    instance.data.value.set(value);
   }
 });
